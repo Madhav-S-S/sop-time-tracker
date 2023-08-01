@@ -11,11 +11,6 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpState extends State<SignUpScreen> {
   _SignUpState();
-
-  bool showProgress = false;
-  bool visible = false;
-  bool show = true;
-
   final _formkey = GlobalKey<FormState>();
 
   final TextEditingController passwordController = new TextEditingController();
@@ -27,157 +22,6 @@ class _SignUpState extends State<SignUpScreen> {
   final TextEditingController mobile = new TextEditingController();
   bool _isObscure = true;
   bool _isObscure2 = true;
-  var roll = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
-    '13',
-    '14',
-    '15',
-    '16',
-    '18',
-    '19',
-    '20',
-    '21',
-    '22',
-    '23',
-    '24',
-    '25',
-    '26',
-    '27',
-    '28',
-    '29',
-    '30',
-    '31',
-    '32',
-    '33',
-    '34',
-    '35',
-    '36',
-    '37',
-    '38',
-    '39',
-    '40',
-    '41',
-    '42',
-    '43',
-    '44',
-    '45',
-    '46',
-    '48',
-    '49',
-    '50',
-    '51',
-    '52',
-    '53',
-    '54',
-    '55',
-    '56',
-    '57',
-    '58',
-    '59',
-    '60',
-    '61',
-    '62',
-    '63',
-    '64',
-    '65',
-    '66',
-    '67',
-    '68',
-    '69',
-    '70',
-    '71',
-    '72',
-    '73',
-    '74',
-    '75',
-    '76',
-    '78',
-    '79',
-    '80',
-    '81',
-    '82',
-    '83',
-    '84',
-    '85',
-    '86',
-    '87',
-    '88',
-    '89',
-    '90',
-    '91',
-    '92',
-    '93',
-    '94',
-    '95',
-    '96',
-    '97',
-    '98',
-    '99',
-    '100',
-    '101',
-    '102',
-    '103',
-    '104',
-    '105',
-    '106',
-    '108',
-    '109',
-    '110',
-    '111',
-    '112',
-    '113',
-    '114',
-    '115',
-    '116',
-    '117',
-    '118',
-    '119',
-    '120'
-  ];
-  var options = [
-    'Student',
-    'Teacher',
-  ];
-  var _class = [
-    "csb2023",
-    "csa2023",
-    "csb2024",
-    "csa2024",
-    "csb2025",
-    "csa2025",
-    "csb2026",
-    "csa2025",
-    "ec2023",
-    "ec2024",
-    "ec2025",
-    "ec2026",
-    "mea2023",
-    "meb2023",
-    "mea2024",
-    "meb2024",
-    "mea2025",
-    "meb2025",
-    "mea2026",
-    "meb2026",
-  ];
-  var _currentItemSelected = "Student";
-  var role = "Student";
-  var _currentItemSelected2 = "1";
-  var rollNo = "1";
-  var _currentItemSelected3 = "csb2024";
-  var _isLoading = false;
-  var branch = "csb2024";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,11 +61,37 @@ class _SignUpState extends State<SignUpScreen> {
                           height: 30,
                         ),
                         TextFormField(
+                          controller: name,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Color(0x77ffffff),
+                            hintText: 'EMPLOYEE NAME',
+                            hintStyle: TextStyle(
+                                fontFamily: 'Poppins', color: Colors.white38),
+                            enabled: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 10.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: new BorderSide(color: Colors.white),
+                              borderRadius: new BorderRadius.circular(20),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: new BorderSide(color: Colors.white),
+                              borderRadius: new BorderRadius.circular(20),
+                            ),
+                          ),
+                          onChanged: (value) {},
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Color(0x77ffffff),
-                            hintText: 'SAINTGITS MAIL ID',
+                            hintText: 'MAIL ID',
                             hintStyle: TextStyle(
                                 fontFamily: 'Poppins', color: Colors.white38),
                             enabled: true,
@@ -347,213 +217,11 @@ class _SignUpState extends State<SignUpScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        TextFormField(
-                          controller: advisorController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color(0x77ffffff),
-                            hintText: show ? 'ADVISOR MAIL ID' : 'HOD MAIL ID',
-                            hintStyle: TextStyle(
-                                fontFamily: 'Poppins', color: Colors.white38),
-                            enabled: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 10.0),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
-                              borderRadius: new BorderRadius.circular(20),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
-                              borderRadius: new BorderRadius.circular(20),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.length == 0) {
-                              return "Email cannot be empty";
-                            }
-                            if (!RegExp(
-                                    "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                                .hasMatch(value)) {
-                              return ("Please enter a valid email");
-                            } else {
-                              return null;
-                            }
-                          },
-                          onChanged: (value) {},
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Role : ",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontFamily: 'Poppins'),
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              width: 150,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                //make the color of the container transparent
-                                color: Color(0x33FFFFFF),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: DropdownButton<String>(
-                                dropdownColor: voiceBlue,
-                                isDense: true,
-                                isExpanded: false,
-                                iconEnabledColor: Colors.white,
-                                focusColor: Colors.white,
-                                items: options.map((String dropDownStringItem) {
-                                  return DropdownMenuItem<String>(
-                                    value: dropDownStringItem,
-                                    child: Text(
-                                      dropDownStringItem,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Poppins',
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (newValueSelected) {
-                                  setState(() {
-                                    _currentItemSelected = newValueSelected!;
-                                    if (_currentItemSelected == "Student")
-                                      show = true;
-                                    else
-                                      show = false;
-                                    role = newValueSelected;
-                                  });
-                                },
-                                value: _currentItemSelected,
-                              ),
-                            ),
-                            //if _currentItemSelected == "Student" then show the department dropdown
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        if (_currentItemSelected == "Student")
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Roll Number : ",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Poppins',
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  //make the color of the container transparent
-                                  color: Color(0x33FFFFFF),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: DropdownButton<String>(
-                                  dropdownColor: voiceBlue,
-                                  isDense: true,
-                                  isExpanded: false,
-                                  iconEnabledColor: Colors.white,
-                                  focusColor: Colors.white,
-                                  items: roll.map((String dropDownStringItem) {
-                                    return DropdownMenuItem<String>(
-                                      value: dropDownStringItem,
-                                      child: Text(
-                                        dropDownStringItem,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Poppins',
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                  onChanged: (newValueSelected) {
-                                    setState(() {
-                                      _currentItemSelected2 = newValueSelected!;
-                                      rollNo = newValueSelected;
-                                    });
-                                  },
-                                  value: _currentItemSelected2,
-                                ),
-                              ),
-                            ],
-                          ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        !show
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Class : ",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    width: 150,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      //make the color of the container transparent
-                                      color: Color(0x33FFFFFF),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: DropdownButton<String>(
-                                      dropdownColor: voiceBlue,
-                                      isDense: true,
-                                      isExpanded: false,
-                                      iconEnabledColor: Colors.white,
-                                      focusColor: Colors.white,
-                                      items: _class
-                                          .map((String dropDownStringItem) {
-                                        return DropdownMenuItem<String>(
-                                          value: dropDownStringItem,
-                                          child: Text(
-                                            dropDownStringItem,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: 'Poppins',
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      onChanged: (newValueSelected) {
-                                        setState(() {
-                                          _currentItemSelected3 =
-                                              newValueSelected!;
-                                          branch = newValueSelected;
-                                        });
-                                      },
-                                      value: _currentItemSelected3,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Container(),
                         SizedBox(
                           height: 20,
                         ),
                         MaterialButton(
+                          color: Colors.white,
                           minWidth: MediaQuery.of(context).size.width - 100,
                           shape: RoundedRectangleBorder(
                               borderRadius:
@@ -562,31 +230,16 @@ class _SignUpState extends State<SignUpScreen> {
                           height: 50,
                           onPressed: () {
                             setState(() {
-                              showProgress = true;
                               //split the string between '.' and '@' to get the branch
                             });
-                            if (role == "Student") {
-                              int atIndex = emailController.text.indexOf("@");
-                              String domain =
-                                  emailController.text.substring(atIndex + 1);
-                              if (domain == 'saintgits.org') {
-                              } else {
-                                print("You are not a student from saintgits");
-                                Text('You are not a student from Saintgits');
-                              }
-                            }
                           },
-                          child: !_isLoading
-                              ? Text(
+                          child:Text(
                                   "Register",
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
                                   ),
                                 )
-                              : const CircularProgressIndicator(
-                                  color: Colors.blue),
-                          color: Colors.white,
                         ),
                         SizedBox(
                           height: 20,
