@@ -33,9 +33,9 @@ class _SignUpState extends State<SignUpScreen> {
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                hexStringToColor("00308F"),
-                hexStringToColor("9546C4"),
-                hexStringToColor("001C2E")
+                hexStringToColor("98FB98"),
+            hexStringToColor("006400"),
+            hexStringToColor("001C2E")
               ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
               child: SingleChildScrollView(
                 child: Container(
@@ -47,7 +47,7 @@ class _SignUpState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 30,
+                          height: 100,
                         ),
                         Text(
                           "Register Now",

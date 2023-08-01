@@ -41,6 +41,9 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
                 child: Column(
                   children: <Widget>[
+                    SizedBox(
+                      height: 100,
+                    ),
                     Text(
                       "SOP Motion Time Tracker",
                       style: TextStyle(
