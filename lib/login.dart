@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Color(0x77ffffff),
-                        hintText: 'SAINTGITS MAIL ID',
+                        hintText: 'EMPLOYEE MAIL ID',
                         hintStyle: TextStyle(
                             fontFamily: "Poppins", color: Colors.white38),
                         enabled: true,
