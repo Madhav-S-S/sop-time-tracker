@@ -7,6 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'SOP Tracker', // Change app name to "SOP Tracker"
       theme: ThemeData(
         primarySwatch: createMaterialColor(Color(0xFF2BD2B4)), // Set primary color
