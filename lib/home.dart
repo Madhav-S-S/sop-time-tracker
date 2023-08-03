@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sop_time_tracker/createProcess/processName.dart';
 
 void main() => runApp(MyApp());
 
@@ -43,7 +44,12 @@ class MenuButtons extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               // TODO: Add functionality for "Create Process" button
-              print('Create Process button pressed.');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProcessNamePage(),
+                ),
+              );
             },
             child: Text('Create Process'),
           ),
