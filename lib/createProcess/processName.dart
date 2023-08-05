@@ -4,17 +4,22 @@ import 'package:hive/hive.dart';
 import 'variableName.dart';
 
 class ProcessNamePage extends StatefulWidget {
+
+
+
   @override
   _ProcessNamePageState createState() => _ProcessNamePageState();
 }
 
 class _ProcessNamePageState extends State<ProcessNamePage> {
-  TextEditingController _processNameController =
+  TextEditingController processNameController =
       TextEditingController(); // Create a controller for the text field
-  bool _isProcessNameValid = false; // Track if the process name is valid or not
+  bool _isProcessNameValid = false;
+  
+  String processName = "processName"; // Track if the process name is valid or not
   Future<void> _createProcess(String processName) async {
-    // Create a process in the database
-    var box = await Hive.openBox(processName);
+    final box = Hive.box('processes');
+    box.put(processName, processName);
   }
 
   @override
@@ -44,7 +49,7 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
               width: 350, // Adjust the width of the text field to 350
               child: TextField(
                 controller:
-                    _processNameController, // Assign the controller to the text field
+                    processNameController, // Assign the controller to the text field
                 style: TextStyle(
                   color: Color(0xFFF9F9F9),
                 ),
@@ -116,7 +121,8 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
                   onPressed: _isProcessNameValid
                       ? () {
                           // Navigate to VariableNamePage when Next button is clicked
-                          _createProcess(_processNameController.text);
+                          processName = processNameController.text;
+                          _createProcess(processName);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

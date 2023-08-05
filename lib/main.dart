@@ -8,6 +8,8 @@ import 'login.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  await Hive.openBox('processes');
+  final box = Hive.box('processes');
   runApp(const MyApp());
 }
 

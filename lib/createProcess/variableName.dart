@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:hive/hive.dart';
+import 'processName.dart';
 class VariableNamePage extends StatefulWidget {
   @override
   _VariableNamePageState createState() => _VariableNamePageState();
@@ -7,10 +8,8 @@ class VariableNamePage extends StatefulWidget {
 
 class _VariableNamePageState extends State<VariableNamePage> {
   String _selectedTaskType = 'Task'; // Initialize the selected task type to 'Task'
-  List<Map<String, String>> _variableList = [];
-
+  List<Map<String, dynamic>> _variableList = [];
   TextEditingController _variableNameController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -221,10 +220,14 @@ class _VariableNamePageState extends State<VariableNamePage> {
     });
   }
 
-  void _addVariable() {
+  void _addVariable() async{
+
     final variableName = _variableNameController.text.trim();
     if (variableName.isNotEmpty) {
       setState(() {
+        final box = Hive.box('processes');
+        box.put ('name', variableName);
+        box.put ('type', _selectedTaskType);
         _variableList.add({
           'name': variableName,
           'type': _selectedTaskType,
