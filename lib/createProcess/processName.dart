@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart'; // Import the fluttertoast package
+import 'package:hive/hive.dart';
 import 'variableName.dart';
 
 class ProcessNamePage extends StatefulWidget {
+
+
+
   @override
   _ProcessNamePageState createState() => _ProcessNamePageState();
 }
 
 class _ProcessNamePageState extends State<ProcessNamePage> {
-  TextEditingController _processNameController = TextEditingController(); // Create a controller for the text field
-  bool _isProcessNameValid = false; // Track if the process name is valid or not
+  TextEditingController processNameController =
+      TextEditingController(); // Create a controller for the text field
+  bool _isProcessNameValid = false;
+  
+  String processName = "processName"; // Track if the process name is valid or not
+  Future<void> _createProcess(String processName) async {
+    final box = Hive.box('processes');
+    box.put('process_name', processName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +31,8 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
         backgroundColor: Color(0xFF29D1B4),
       ),
       backgroundColor: Color(0xFF1C1D1C), // Set background color to #1c1d1c
-      body: Center( // Wrap the Column with Center to horizontally center align its children
+      body: Center(
+        // Wrap the Column with Center to horizontally center align its children
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -36,7 +48,8 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
             Container(
               width: 350, // Adjust the width of the text field to 350
               child: TextField(
-                controller: _processNameController, // Assign the controller to the text field
+                controller:
+                    processNameController, // Assign the controller to the text field
                 style: TextStyle(
                   color: Color(0xFFF9F9F9),
                 ),
@@ -45,13 +58,18 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
                   fillColor: Color(0xFF1C1D1C),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide(color: Color(0xFF2DD3B3), width: 2), // Set border color and width
+                    borderSide: BorderSide(
+                        color: Color(0xFF2DD3B3),
+                        width: 2), // Set border color and width
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide(color: Color(0xFF2DD3B3), width: 2), // Set border color and width
+                    borderSide: BorderSide(
+                        color: Color(0xFF2DD3B3),
+                        width: 2), // Set border color and width
                   ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   isDense: true,
                   prefixIcon: Icon(
                     Icons.add, // Change the icon as per your requirement
@@ -71,7 +89,8 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
         ),
       ),
       bottomNavigationBar: Container(
-        color: Color(0xFF1C1D1C), // Set bottom navigation bar container color to #1c1d1c
+        color: Color(
+            0xFF1C1D1C), // Set bottom navigation bar container color to #1c1d1c
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -84,7 +103,8 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
                     Navigator.pop(context);
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFE73A37)), // Set button color to #e73a37
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color(0xFFE73A37)), // Set button color to #e73a37
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                     ),
@@ -100,18 +120,22 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
                 child: ElevatedButton(
                   onPressed: _isProcessNameValid
                       ? () {
-                    // Navigate to VariableNamePage when Next button is clicked
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => VariableNamePage()),
-                    );
-                  }
+                          // Navigate to VariableNamePage when Next button is clicked
+                          processName = processNameController.text;
+                          _createProcess(processName);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VariableNamePage()),
+                          );
+                        }
                       : () {
-                    // Show the toast message when the process name is invalid and the button is clicked
-                    _showInvalidProcessNameToast();
-                  },
+                          // Show the toast message when the process name is invalid and the button is clicked
+                          _showInvalidProcessNameToast();
+                        },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF29D1B4)), // Set button color to #29d1b4
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color(0xFF29D1B4)), // Set button color to #29d1b4
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                     ),
