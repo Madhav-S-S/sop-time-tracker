@@ -19,7 +19,7 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
   String processName = "processName"; // Track if the process name is valid or not
   Future<void> _createProcess(String processName) async {
     final box = Hive.box('processes');
-    box.put(processName, processName);
+    box.put('process_name', processName);
   }
 
   @override

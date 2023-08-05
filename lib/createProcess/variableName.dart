@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'processName.dart';
+
 class VariableNamePage extends StatefulWidget {
   @override
   _VariableNamePageState createState() => _VariableNamePageState();
 }
 
 class _VariableNamePageState extends State<VariableNamePage> {
-  String _selectedTaskType = 'Task'; // Initialize the selected task type to 'Task'
+  String _selectedTaskType =
+      'Task'; // Initialize the selected task type to 'Task'
   List<Map<String, dynamic>> _variableList = [];
   TextEditingController _variableNameController = TextEditingController();
   @override
@@ -40,7 +42,8 @@ class _VariableNamePageState extends State<VariableNamePage> {
                   borderRadius: BorderRadius.circular(50),
                   borderSide: BorderSide(color: Color(0xFF2DD3B3), width: 2),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 isDense: true,
                 hintText: 'Variable Name',
                 hintStyle: TextStyle(
@@ -68,7 +71,8 @@ class _VariableNamePageState extends State<VariableNamePage> {
                     borderRadius: BorderRadius.circular(50),
                     borderSide: BorderSide(color: Color(0xFF2DD3B3), width: 2),
                   ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   isDense: true,
                 ),
                 child: Row(
@@ -98,10 +102,12 @@ class _VariableNamePageState extends State<VariableNamePage> {
                   _addVariable();
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF2DD3B3)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Color(0xFF2DD3B3)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                      borderRadius: BorderRadius.circular(
+                          10), // Adjust the radius as needed
                     ),
                   ),
                 ),
@@ -146,7 +152,8 @@ class _VariableNamePageState extends State<VariableNamePage> {
                     Navigator.pop(context);
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFE73A37)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xFFE73A37)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                     ),
@@ -164,7 +171,8 @@ class _VariableNamePageState extends State<VariableNamePage> {
                     print('Next button clicked');
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF29D1B4)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xFF29D1B4)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                     ),
@@ -181,11 +189,13 @@ class _VariableNamePageState extends State<VariableNamePage> {
 
   void _showTaskTypeMenu() {
     final RenderBox button = context.findRenderObject() as RenderBox;
-    final RenderBox overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
+    final RenderBox overlay =
+        Overlay.of(context)!.context.findRenderObject() as RenderBox;
     final RelativeRect position = RelativeRect.fromRect(
       Rect.fromPoints(
         button.localToGlobal(Offset.zero, ancestor: overlay),
-        button.localToGlobal(button.size.bottomLeft(Offset.zero), ancestor: overlay),
+        button.localToGlobal(button.size.bottomLeft(Offset.zero),
+            ancestor: overlay),
       ),
       Offset.zero & overlay.size,
     );
@@ -220,14 +230,14 @@ class _VariableNamePageState extends State<VariableNamePage> {
     });
   }
 
-  void _addVariable() async{
-
+  void _addVariable() async {
     final variableName = _variableNameController.text.trim();
     if (variableName.isNotEmpty) {
       setState(() {
         final box = Hive.box('processes');
-        box.put ('name', variableName);
-        box.put ('type', _selectedTaskType);
+        box.put('name', variableName);
+        box.put('type', _selectedTaskType);
+
         _variableList.add({
           'name': variableName,
           'type': _selectedTaskType,
@@ -248,7 +258,8 @@ class _VariableNamePageState extends State<VariableNamePage> {
     final variableName = variableItem['name']!;
     final variableType = variableItem['type']!;
 
-    TextSpan nameSpan = TextSpan(text: variableName, style: TextStyle(color: Colors.white));
+    TextSpan nameSpan =
+        TextSpan(text: variableName, style: TextStyle(color: Colors.white));
     TextSpan typeSpan;
 
     if (variableType == 'Waste') {
@@ -256,13 +267,15 @@ class _VariableNamePageState extends State<VariableNamePage> {
     } else if (variableType == 'Task') {
       typeSpan = TextSpan(text: 'Task', style: TextStyle(color: Colors.green));
     } else {
-      typeSpan = TextSpan(text: variableType, style: TextStyle(color: Colors.white));
+      typeSpan =
+          TextSpan(text: variableType, style: TextStyle(color: Colors.white));
     }
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       height: 50, // You can adjust the height as needed
-      decoration: BoxDecoration( // Add a BoxDecoration with border for each GridView item
+      decoration: BoxDecoration(
+        // Add a BoxDecoration with border for each GridView item
         border: Border.all(
           color: Colors.white,
           width: 1,
@@ -307,6 +320,4 @@ class _VariableNamePageState extends State<VariableNamePage> {
       ),
     );
   }
-
-
 }
