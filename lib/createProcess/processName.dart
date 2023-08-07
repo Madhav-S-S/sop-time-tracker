@@ -14,11 +14,9 @@ class ProcessNamePage extends StatefulWidget {
 class _ProcessNamePageState extends State<ProcessNamePage> {
   TextEditingController processNameController =
       TextEditingController(); // Create a controller for the text field
-  bool _isProcessNameValid = false;
-  
-  String processName = "processName"; // Track if the process name is valid or not
+  bool _isProcessNameValid = false; // Track if the process name is valid or not
   Future<void> _createProcess(String processName) async {
-    final box = Hive.box('processes');
+    final box = Hive.box(processName);
     box.put('process_name', processName);
   }
 
@@ -121,12 +119,11 @@ class _ProcessNamePageState extends State<ProcessNamePage> {
                   onPressed: _isProcessNameValid
                       ? () {
                           // Navigate to VariableNamePage when Next button is clicked
-                          processName = processNameController.text;
-                          _createProcess(processName);
+                          _createProcess(processNameController.text);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => VariableNamePage()),
+                                builder: (context) => VariableNamePage(processName : processNameController.text)),
                           );
                         }
                       : () {

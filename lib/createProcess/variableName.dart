@@ -1,11 +1,15 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';	
 import 'package:hive/hive.dart';	
 import '../model/model.dart';	
 import 'processName.dart';
-import 'recordingScreen/recording.dart';
+import '../recordingScreen/recording.dart';
 
 	
 class VariableNamePage extends StatefulWidget {	
+  final String processName;
+  VariableNamePage({required this.processName});
   @override	
   _VariableNamePageState createState() => _VariableNamePageState();	
 }	
@@ -16,14 +20,14 @@ class _VariableNamePageState extends State<VariableNamePage> {
   TextEditingController _variableNameController = TextEditingController();
   Future<void> _createItem(String name, String type) async {	
     Data newItem = Data(name: name, type: type);	
-    final box = Hive.box('processes');	
+    final box = Hive.box(widget.processName);	
     await box.add(newItem);	
   }	
   @override	
   Widget build(BuildContext context) {	
     return Scaffold(	
       appBar: AppBar(	
-        title: Text('Variable Name Page'),	
+        title: Text(widget.processName),	
         automaticallyImplyLeading: false,	
         backgroundColor: Color(0xFF29D1B4),	
       ),	
