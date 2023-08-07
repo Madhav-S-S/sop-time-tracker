@@ -18,11 +18,26 @@ class _VariableNamePageState extends State<VariableNamePage> {
       'Task'; // Initialize the selected task type to 'Task'	
   List<Map<String, String>> _variableList = [];	
   TextEditingController _variableNameController = TextEditingController();
-  Future<void> _createItem(String name, String type) async {	
-    Data newItem = Data(name: name, type: type);	
-    final box = Hive.box(widget.processName);	
-    await box.add(newItem);	
-  }	
+  @override
+void initState() {
+  super.initState();
+  _loadDataFromHive();
+}
+
+Future<void> _loadDataFromHive() async {
+  final box = await Hive.openBox<Map<String, String>>(widget.processName); // Open the Hive box
+  final dataList = box.values.toList(); // Retrieve all items from the box as a list
+  setState(() {
+    _variableList = dataList.cast<Map<String, String>>(); // Cast the list to the correct type
+  });
+}
+
+  Future<void> _createItem() async {
+    final box = await Hive.openBox<Map<String, String>>(widget.processName); // Open the Hive box
+    await box.clear(); // Clear the box to remove any existing data
+    await box.addAll(_variableList); // Store the entire _variableList in the box
+  }
+
   @override	
   Widget build(BuildContext context) {	
     return Scaffold(	
@@ -178,7 +193,10 @@ class _VariableNamePageState extends State<VariableNamePage> {
               child: Padding(	
                 padding: EdgeInsets.all(4.0),	
                 child: ElevatedButton(	
-                  onPressed: () {
+                  onPressed: () async{
+                    await _createItem();
+                  // Print all data in the database to the console
+                  _printDataFromHive();
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => RecordingPage(variableList: _variableList)),
@@ -239,19 +257,20 @@ class _VariableNamePageState extends State<VariableNamePage> {
       }	
     });	
   }	
-  void _addVariable() async {	
-    _createItem(_variableNameController.text, _selectedTaskType);	
-    final variableName = _variableNameController.text.trim();	
-    if (variableName.isNotEmpty) {	
-      setState(() {	
-        _variableList.add({	
-          'name': variableName,	
-          'type': _selectedTaskType,	
-        });	
-        _variableNameController.clear();	
-      });	
-    }	
-  }	
+  void _addVariable() async {
+  final variableName = _variableNameController.text.trim();
+  if (variableName.isNotEmpty) {
+    setState(() {
+      _variableList.add({
+        'name': variableName,
+        'type': _selectedTaskType,
+      });
+      _variableNameController.clear();
+    });
+    await _createItem(); // Call _createItem() to store the updated _variableList in the Hive box
+  }
+}
+
   void _removeVariable(int index) {	
     setState(() {	
       _variableList.removeAt(index);	
@@ -321,4 +340,12 @@ class _VariableNamePageState extends State<VariableNamePage> {
       ),	
     );	
   }	
+  void _printDataFromHive() async {
+  final box = await Hive.openBox<Map<String, String>>(widget.processName);
+  final dataList = box.values.toList();
+  print("Data in the Hive database:");
+  dataList.forEach((data) {
+    print(data);
+  });
+}
 }	
