@@ -15,12 +15,13 @@ class _RecordingPageState extends State<RecordingPage> {
   int _selectedIndex = -1; // Initialize selected index to -1 (no selection)
   int _prevSelectedIndex = -1; // Keep track of previously selected index
   int _actionCount = 0;
+  String _lapsedTime = '';
   String _startTime = '';
   Map<int, String> _lastActionMap = {}; // Map to store last actions
 
   // A stream that emits a value every second
   Stream<DateTime> _timeStream =
-  Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
+      Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class _RecordingPageState extends State<RecordingPage> {
                   },
                 ),
                 _buildWhiteBox("Action Time", ""),
-                _buildWhiteBox("Lapsed Time", ""),
+                _buildWhiteBox("Lapsed Time", _lapsedTime),
               ],
             ),
           ),
@@ -134,9 +135,14 @@ class _RecordingPageState extends State<RecordingPage> {
                       if (isSelected) {
                         _actionCount++;
                       }
+                      else{
+                                                    _startTime = //current time in normal format (hh:mm:ss)
+                            DateFormat('hh:mm:ss').format(DateTime.now());
+                      }
                       if (_prevSelectedIndex != -1) {
                         // Store the last variable name for the previously selected item
-                        _lastActionMap[_selectedIndex] = widget.variableList[_prevSelectedIndex]['name']!;
+                        _lastActionMap[_selectedIndex] =
+                            widget.variableList[_prevSelectedIndex]['name']!;
                       }
                     });
                   },
@@ -145,9 +151,11 @@ class _RecordingPageState extends State<RecordingPage> {
                       color: isSelected
                           ? Colors.black
                           : (variableType == 'Waste'
-                          ? Colors.red
-                          : Colors.green),
-                      border: isSelected ? Border.all(color: Colors.red, width: 1) : null,
+                              ? Colors.red
+                              : Colors.green),
+                      border: isSelected
+                          ? Border.all(color: Colors.red, width: 1)
+                          : null,
                     ),
                     child: Align(
                       alignment: Alignment.center,
@@ -176,7 +184,7 @@ class _RecordingPageState extends State<RecordingPage> {
     setState(() {
       _isPlaying = !_isPlaying;
       if (_isPlaying) {
-        _startTime = _formatTime(DateTime.now());
+        _lapsedTime = _formatTime(DateTime.now());
       } else {
         // Reset the action count when the pause button is pressed
         _actionCount = 0;
@@ -202,7 +210,8 @@ class _RecordingPageState extends State<RecordingPage> {
           SizedBox(height: 5),
           Text(
             text,
-            style: TextStyle(color: Colors.green, fontWeight: FontWeight.normal),
+            style:
+                TextStyle(color: Colors.green, fontWeight: FontWeight.normal),
           ),
         ],
       ),
@@ -215,6 +224,7 @@ class _RecordingPageState extends State<RecordingPage> {
 
   String _getLastActionText() {
     // Return the last variable name for the selected item
-    return _lastActionMap[_selectedIndex] ?? ''; // Provide a default value for null case
+    return _lastActionMap[_selectedIndex] ??
+        ''; // Provide a default value for null case
   }
 }
