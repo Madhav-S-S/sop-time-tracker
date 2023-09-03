@@ -8,10 +8,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'SOP Tracker', // Change app name to "SOP Tracker"
+      title: 'SOP Tracker',
       theme: ThemeData(
-        primarySwatch: createMaterialColor(Color(0xFF2BD2B4)), // Set primary color
-        scaffoldBackgroundColor: Colors.black, // Set background color
+        primarySwatch: createMaterialColor(Color(0xFF2BD2B4)),
       ),
       home: MyHomePage(),
     );
@@ -23,11 +22,16 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SOP Tracker'), // Change app bar title to "SOP Tracker"
-        backgroundColor: Color(0xFF2BD2B4), // Set app bar color
+        title: Text('SOP Tracker'),
+        backgroundColor: Color(0xFF2BD2B4),
       ),
-      body: Center(
-        child: MenuButtons(),
+      body: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFF1C1D1C), // Set background color
+        ),
+        child: Center(
+          child: MenuButtons(),
+        ),
       ),
     );
   }
@@ -41,10 +45,10 @@ class MenuButtons extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: 200, // Set the desired fixed width for the buttons
+          height: 50,
+          width: 200,
           child: ElevatedButton(
             onPressed: () {
-              // TODO: Add functionality for "Create Process" button
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -52,50 +56,90 @@ class MenuButtons extends StatelessWidget {
                 ),
               );
             },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF2BD2B4)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50), // Round the button corners
+                ),
+              ),
+            ),
             child: Text('Create Process'),
           ),
         ),
         SizedBox(height: 10),
         SizedBox(
-          width: 200, // Set the desired fixed width for the buttons
+          height: 50,
+          width: 200,
           child: ElevatedButton(
             onPressed: () {
-              // TODO: Add functionality for "Existing Process" button
               print('Existing Process button pressed.');
             },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF2BD2B4)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50), // Round the button corners
+                ),
+              ),
+            ),
             child: Text('Existing Process'),
           ),
         ),
         SizedBox(height: 10),
         SizedBox(
-          width: 200, // Set the desired fixed width for the buttons
+          height: 50,
+          width: 200,
           child: ElevatedButton(
             onPressed: () {
-              // TODO: Add functionality for "Import Process File" button
               print('Import Process File button pressed.');
             },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF2BD2B4)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50), // Round the button corners
+                ),
+              ),
+            ),
             child: Text('Import Process File'),
           ),
         ),
         SizedBox(height: 10),
         SizedBox(
-          width: 200, // Set the desired fixed width for the buttons
+          height: 50,
+          width: 200,
           child: ElevatedButton(
             onPressed: () {
-              // TODO: Add functionality for "Export Process File" button
               print('Export Process File button pressed.');
             },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF2BD2B4)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50), // Round the button corners
+                ),
+              ),
+            ),
             child: Text('Export Process File'),
           ),
         ),
         SizedBox(height: 10),
         SizedBox(
-          width: 200, // Set the desired fixed width for the buttons
+          height: 50,
+          width: 200,
           child: ElevatedButton(
             onPressed: () {
-              // TODO: Add functionality for "Export Recorded File" button
               print('Export Recorded File button pressed.');
             },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF2BD2B4)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50), // Round the button corners
+                ),
+              ),
+            ),
             child: Text('Export Recorded File'),
           ),
         ),
@@ -104,7 +148,6 @@ class MenuButtons extends StatelessWidget {
   }
 }
 
-// Helper function to create a MaterialColor from a Color
 MaterialColor createMaterialColor(Color color) {
   List<double> strengths = <double>[.05];
   Map<int, Color> swatch = <int, Color>{};
